@@ -14,8 +14,7 @@ function renderLicenseBadge(license) {
 // If there is no license, return an empty string
 function renderLicenseLink(license) {
   if (license !== 'no license') {
-    return `
-    [${license}](https://choosealicense.com/licenses/${license})
+    return `* [${license}](https://opensource.org/licenses/${license})
       `;
     } else {
       return ' ';
@@ -26,10 +25,10 @@ function renderLicenseLink(license) {
 // If there is no license, return an empty string
 function renderLicenseSection(license) {  
   if (license !== 'no license') {
-    return `
-    ## [License](#License)
+    return `## License
     The application is covered under the following license:
-    ${renderLicenseLink(license)}
+
+  ${renderLicenseLink(license)}
     `;
     } else {
       return ' ';
@@ -39,7 +38,34 @@ function renderLicenseSection(license) {
 // TODO: Create a function to generate markdown for README
 function generateMarkdown(data) {
   return `# ${data.title}
+  ${renderLicenseBadge(data.license)}
+  ## Table-of-Contents
+  * [Description](#description)
+  * [Installation](#installation)
+  * [Usage](#usage)
+  * [Tests](#tests)
+  * [Questions](#questions)
+  * [License](#license)
+  
+  ## Description
 
+  ${data.description}
+
+  ## Installation
+
+  ${data.installation}
+
+  ## Usage
+
+  ${data.usage}
+  
+  ${renderLicenseSection(data.license)}
+
+  ## Questions
+
+  Please contact me using the following links:
+  [GitHub](https://github.com/${data.githubUsername})
+  [Email: ${data.email}](mailto:${data.email})
 `;
 }
 

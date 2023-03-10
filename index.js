@@ -66,32 +66,6 @@ const questions = [
     },
     {
         type: 'input',
-        name: 'contributing',
-        message: 'How can someone contribute to this project?',
-        validate: function (data) {
-            if (data) {
-                return true;
-            } else {
-                console.log('Instruct the user on how to contribute to the project')
-                return false;
-            }
-        }
-    },
-    {
-        type: 'input',
-        name: 'tests',
-        message: 'How can someone test this application?',
-        validate: function (data) {
-            if (data) {
-                return true;
-            } else {
-                console.log('Instruct the user on how to test the application')
-                return false;
-            }
-        }
-    },
-    {
-        type: 'input',
         name: 'email',
         message: 'What is your email address?',
         validate: function (data) {
@@ -118,11 +92,37 @@ const questions = [
     }
 ];
 
-// TODO: Create a function to write README file
-function writeToFile(fileName, data) {}
+const writeToFile = data => {
+    return new Promise((resolve, reject) => {
+        fs.writeFile('./README.md', data, err => {
+            if (err) {
+                reject(console.error(err));
+                return;
+            }
+            resolve(
+                console.log('successfully created README!')
+            );
+        });
+    });
+};
 
-// TODO: Create a function to initialize app
-function init() {}
+// When you run node index.js the questions will be asked.
+const init = () => {
+    return inquirer.prompt(questions)
+    .then(readmeData => {
+        return readmeData;
+    })
+};
 
 // Function call to initialize app
-init();
+init()
+.then(readmeData => {
+    console.log(readmeData);
+    return generateMarkdown(readmeData);
+})
+.then(pageMD => {
+    return writeToFile(pageMD);
+})
+.catch(err => {
+    console.log(err);
+})
