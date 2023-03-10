@@ -94,7 +94,7 @@ const questions = [
 
 const writeToFile = data => {
     return new Promise((resolve, reject) => {
-        fs.writeFile('./README.md', data, err => {
+        fs.writeFile('./generated-README/README.md', data, err => {
             if (err) {
                 reject(console.error(err));
                 return;
